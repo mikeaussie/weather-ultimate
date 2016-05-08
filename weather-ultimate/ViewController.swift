@@ -8,17 +8,34 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
 
+    @IBOutlet weak var tempLbl: UILabel!
+    @IBOutlet weak var tempMin: UILabel!
+    @IBOutlet weak var tempMax: UILabel!
+    @IBOutlet weak var citiName: UILabel!
+    
+    var weather: Weather!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        weather = Weather(id: CITI_ID, name: CITI_NAME)
+        
+        weather.downloadWeatherDetails {
+            self.updateUI()
+        }
+    }
+    
+    func updateUI() {
+        citiName.text = "City of \(weather.citiName)"
+        tempMin.text = "\(weather.tempMin)˚"
+        tempMax.text = "\(weather.tempMax)˚"
+        tempLbl.text = "\(weather.temp)˚"
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
 
 
 }
